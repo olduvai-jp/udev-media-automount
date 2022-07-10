@@ -1,0 +1,21 @@
+#!/bin/sh
+#$1 = <dev>
+
+log() {
+    logger -st "media-umount" "$*"
+}
+
+if ! [ "$1" ]
+then
+    log "missing arguments! a media device name must be provided"
+    exit 1
+else
+    dir=$1
+fi
+
+if umount "$dir"; then
+    rmdir "$dir"
+    log "umounted $dir"
+else
+    log "failed to umount $dir"
+fi
